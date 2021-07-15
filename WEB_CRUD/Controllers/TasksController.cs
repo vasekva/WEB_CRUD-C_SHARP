@@ -20,10 +20,21 @@ namespace WEB_CRUD.Controllers
         }
 
         // GET: Tasks
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter,
+            string searchString, int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
             ViewData["CurrentFilter"] = searchString;
             var tasks = from t in _context.Tasks
                 select t;
@@ -47,7 +58,8 @@ namespace WEB_CRUD.Controllers
                     tasks = tasks.OrderBy(t => t.TaskName);
                     break;
             }
-            return View(await tasks.AsNoTracking().ToListAsync());
+            int pageSize = 3;
+            return View(await PaginatedList<Task>.CreateAsync(tasks.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Tasks/Details/5
