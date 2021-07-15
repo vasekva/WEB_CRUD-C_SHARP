@@ -10,22 +10,24 @@ namespace WEB_CRUD.Data
         {
             context.Database.EnsureCreated();
 
-            // Look for any students.
-            if (context.Tasks.Any())
+            // Look for any prjoects.
+            if (context.Projects.Any())
             {
                 return;   // DB has been seeded
             }
 
-            var tasks = new Task[]
+            var projects = new Project[]
             {
-                new Task{TaskDescription="FirstTask",TaskName="FirstTask",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Task{TaskDescription="SecondTask",TaskName="SecondTask",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Task{TaskDescription="ThirdTask",TaskName="ThirdTask",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Task{TaskDescription="FourthTask",TaskName="FourthTask",EnrollmentDate=DateTime.Parse("2002-09-01")},
+                new Project{ProjectName="Alexander",StartDate=DateTime.Parse("2005-09-01"),
+                    CompletionDate=DateTime.Parse("2005-12-01"), Status=Status.Completed},
+                new Project{ProjectName="Alonso",StartDate=DateTime.Parse("2002-06-12"),
+                    CompletionDate=DateTime.Parse("2003-12-01"), Status=Status.Completed},
+                new Project{ProjectName="Anand",StartDate=DateTime.Parse("2003-09-01"),
+                    Status=Status.Active}
             };
-            foreach (Task t in tasks)
+            foreach (Project p in projects)
             {
-                context.Tasks.Add(t);
+                context.Projects.Add(p);
             }
             context.SaveChanges();
 
@@ -45,24 +47,24 @@ namespace WEB_CRUD.Data
             }
             context.SaveChanges();
 
-            var enrollments = new Enrollment[]
+            var tasks = new TaskEntity[]
             {
-                new Enrollment{TaskID=1,CourseID=1050,Grade=Grade.A},
-                new Enrollment{TaskID=1,CourseID=4022,Grade=Grade.C},
-                new Enrollment{TaskID=1,CourseID=4041,Grade=Grade.B},
-                new Enrollment{TaskID=2,CourseID=1045,Grade=Grade.B},
-                new Enrollment{TaskID=2,CourseID=3141,Grade=Grade.F},
-                new Enrollment{TaskID=2,CourseID=2021,Grade=Grade.F},
-                new Enrollment{TaskID=3,CourseID=1050},
-                new Enrollment{TaskID=4,CourseID=1050},
-                new Enrollment{TaskID=4,CourseID=4022,Grade=Grade.F},
-                new Enrollment{TaskID=5,CourseID=4041,Grade=Grade.C},
-                new Enrollment{TaskID=6,CourseID=1045},
-                new Enrollment{TaskID=7,CourseID=3141,Grade=Grade.A},
+            new TaskEntity{TaskEntityID=1,CourseID=1050,TaskStatus=TaskStatus.Done},
+            new TaskEntity{TaskEntityID=1,CourseID=4022,TaskStatus=TaskStatus.InProgress},
+            new TaskEntity{TaskEntityID=1,CourseID=4041,TaskStatus=TaskStatus.ToDo},
+            new TaskEntity{TaskEntityID=2,CourseID=1045,TaskStatus=TaskStatus.ToDo},
+            new TaskEntity{TaskEntityID=2,CourseID=3141,TaskStatus=TaskStatus.ToDo},
+            new TaskEntity{TaskEntityID=2,CourseID=2021,TaskStatus=TaskStatus.ToDo},
+            new TaskEntity{TaskEntityID=3,CourseID=1050,TaskStatus=TaskStatus.InProgress},
+            new TaskEntity{TaskEntityID=4,CourseID=1050,TaskStatus=TaskStatus.ToDo},
+            new TaskEntity{TaskEntityID=4,CourseID=4022,TaskStatus=TaskStatus.Done},
+            new TaskEntity{TaskEntityID=5,CourseID=4041,TaskStatus=TaskStatus.Done},
+            new TaskEntity{TaskEntityID=6,CourseID=1045,TaskStatus=TaskStatus.InProgress},
+            new TaskEntity{TaskEntityID=7,CourseID=3141,TaskStatus=TaskStatus.InProgress}
             };
-            foreach (Enrollment e in enrollments)
+            foreach (TaskEntity t in tasks)
             {
-                context.Enrollments.Add(e);
+                context.TasksEntities.Add(t);
             }
             context.SaveChanges();
         }
