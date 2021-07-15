@@ -157,3 +157,4 @@ C:\Users\fatality\source\repos\WEB_CRUD\WEB_CRUD\obj\Debug\net5.0\Razor\Views\Ta
 C:\Users\fatality\source\repos\WEB_CRUD\WEB_CRUD\obj\Debug\net5.0\Razor\Views\Tasks\Details.cshtml.g.cs
 C:\Users\fatality\source\repos\WEB_CRUD\WEB_CRUD\obj\Debug\net5.0\Razor\Views\Tasks\Edit.cshtml.g.cs
 C:\Users\fatality\source\repos\WEB_CRUD\WEB_CRUD\obj\Debug\net5.0\Razor\Views\Tasks\Index.cshtml.g.cs
+C:\Users\fatality\source\repos\WEB_CRUD\WEB_CRUD\obj\Debug\net5.0\WEB_CRUD.csproj.AssemblyReference.cache

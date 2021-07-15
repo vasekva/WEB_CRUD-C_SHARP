@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WEB_CRUD.Data;
-using WEB_CRUD.Models;
+using Task = WEB_CRUD.Models.Task;
 
 namespace WEB_CRUD.Controllers
 {
@@ -34,6 +34,9 @@ namespace WEB_CRUD.Controllers
             }
 
             var task = await _context.Tasks
+                .Include(s => s.Enrollments)
+                .ThenInclude(e => e.Course)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (task == null)
             {
@@ -54,31 +57,56 @@ namespace WEB_CRUD.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TaskName,TaskDescription,EnrollmentDate")] Models.Task task)
+        public async Task<IActionResult> Create([Bind("EnrollmentDate,TaskDescription,TaskName")] Models.Task task)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(task);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(task);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("", "Unable to save changes. " +
+                                             "Try again, and if the problem persists " +
+                                             "see your system administrator.");
             }
             return View(task);
         }
 
         // GET: Tasks/Edit/5
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var task = await _context.Tasks.FindAsync(id);
-            if (task == null)
+            var taskToUpdate = await _context.Tasks.FirstOrDefaultAsync(t => t.ID == id);
+            if (await TryUpdateModelAsync<Task>(
+                taskToUpdate,
+                "",
+                t => t.TaskDescription, t => t.TaskName, t => t.EnrollmentDate))
             {
-                return NotFound();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException /* ex */)
+                {
+                    //Log the error (uncomment ex variable name and write a log.)
+                    ModelState.AddModelError("", "Unable to save changes. " +
+                                                 "Try again, and if the problem persists, " +
+                                                 "see your system administrator.");
+                }
             }
-            return View(task);
+            return View(taskToUpdate);
         }
 
         // POST: Tasks/Edit/5
@@ -117,7 +145,7 @@ namespace WEB_CRUD.Controllers
         }
 
         // GET: Tasks/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
@@ -125,12 +153,18 @@ namespace WEB_CRUD.Controllers
             }
 
             var task = await _context.Tasks
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (task == null)
             {
                 return NotFound();
             }
-
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["ErrorMessage"] =
+                    "Delete failed. Try again, and if the problem persists " +
+                    "see your system administrator.";
+            }
             return View(task);
         }
 
@@ -140,9 +174,22 @@ namespace WEB_CRUD.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var task = await _context.Tasks.FindAsync(id);
-            _context.Tasks.Remove(task);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (task == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                _context.Tasks.Remove(task);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.)
+                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+            }
         }
 
         private bool TaskExists(int id)
