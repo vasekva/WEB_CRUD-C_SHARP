@@ -20,9 +20,34 @@ namespace WEB_CRUD.Controllers
         }
 
         // GET: Tasks
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            return View(await _context.Tasks.ToListAsync());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString;
+            var tasks = from t in _context.Tasks
+                select t;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                tasks = tasks.Where(t => t.TaskName.Contains(searchString)
+                                               || t.TaskDescription.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    tasks = tasks.OrderByDescending(t => t.TaskName);
+                    break;
+                case "Date":
+                    tasks = tasks.OrderBy(t => t.EnrollmentDate);
+                    break;
+                case "date_desc":
+                    tasks = tasks.OrderByDescending(t => t.EnrollmentDate);
+                    break;
+                default:
+                    tasks = tasks.OrderBy(t => t.TaskName);
+                    break;
+            }
+            return View(await tasks.AsNoTracking().ToListAsync());
         }
 
         // GET: Tasks/Details/5
@@ -79,9 +104,26 @@ namespace WEB_CRUD.Controllers
         }
 
         // GET: Tasks/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var task = await _context.Tasks.FindAsync(id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            return View(task);
+        }
+
+        // POST: Tasks/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditPost(int? id)
         {
             if (id == null)
             {
@@ -107,41 +149,6 @@ namespace WEB_CRUD.Controllers
                 }
             }
             return View(taskToUpdate);
-        }
-
-        // POST: Tasks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,TaskName,TaskDescription,EnrollmentDate")] Models.Task task)
-        {
-            if (id != task.ID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(task);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TaskExists(task.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(task);
         }
 
         // GET: Tasks/Delete/5
