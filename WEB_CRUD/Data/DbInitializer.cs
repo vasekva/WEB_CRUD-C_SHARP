@@ -36,26 +36,6 @@ namespace WEB_CRUD.Data
             };
             context.AddRange(projects);
             context.SaveChanges();
-
-            var tasks = new TaskEntity[]
-            {
-                new TaskEntity
-                {
-                    TaskEntityID=10
-                },
-                new TaskEntity
-                {
-                    TaskEntityID=1,TaskName="1050",TaskStatus=TaskStatus.Done, TaskDescriprion="Description", TaskPriority=4,
-                    ProjectId = projects.Single(p => p.ProjectName == "Alexander").ID
-                },
-                new TaskEntity
-                {
-                    TaskEntityID=1,TaskName="4022",TaskStatus=TaskStatus.InProgress, TaskDescriprion="Description", TaskPriority=4,
-                    ProjectId = projects.Single(p => p.ProjectName == "Alexander").ID
-                },
-            };
-            context.AddRange(tasks);
-            context.SaveChanges();
         }
     }
 }
