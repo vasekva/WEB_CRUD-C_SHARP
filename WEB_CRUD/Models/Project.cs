@@ -13,10 +13,11 @@ namespace WEB_CRUD.Models
         public string ProjectName { get; set; }
 
         public DateTime StartDate { get; set; }
-        public DateTime CompletionDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
 
         public TaskEntity TaskEntity;
         public ICollection<TaskEntity> TasksEntities { get; set; }
         public Status? Status { get; set; }
+        public int Priority { get; set; }
     }
 }

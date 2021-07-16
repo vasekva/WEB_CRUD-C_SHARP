@@ -19,11 +19,11 @@ namespace WEB_CRUD.Data
             var projects = new Project[]
             {
                 new Project{ProjectName="Alexander",StartDate=DateTime.Parse("2005-09-01"),
-                    CompletionDate=DateTime.Parse("2005-12-01"), Status=Status.Completed},
+                    CompletionDate=DateTime.Parse("2005-12-01"), Status=Status.Completed, Priority=2},
                 new Project{ProjectName="Alonso",StartDate=DateTime.Parse("2002-06-12"),
-                    CompletionDate=DateTime.Parse("2003-12-01"), Status=Status.Completed},
+                    CompletionDate=DateTime.Parse("2003-12-01"), Status=Status.Completed, Priority=0},
                 new Project{ProjectName="Anand",StartDate=DateTime.Parse("2003-09-01"),
-                    Status=Status.Active}
+                    Status=Status.Active, Priority=10}
             };
             foreach (Project p in projects)
             {
