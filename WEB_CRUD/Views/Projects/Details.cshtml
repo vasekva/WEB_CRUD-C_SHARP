@@ -51,14 +51,17 @@
                 </tr>
                 @foreach (var item in Model.Tasks)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => item.TaskName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.TaskEntityID)
-                        </td>
-                    </tr>
+                    if (item.ProjectId == Model.ID)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => item.TaskName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.TaskEntityID)
+                            </td>
+                        </tr>
+                    }
                 }
             </table>
         </dd>
