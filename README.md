@@ -14,11 +14,10 @@
 ![mainpage_image](./WEB_CRUD/MD_Files/MainPage.png)
 
 <h2>Necessary steps to start a project:</h2>
-<h5>
+
    Pay attention! I recommend using ***VisualStudio*** because
    the EntityFrameworkCore.SqlServer extension and the 'SQLServer Object Explorer'
    allow you to conveniently view and delete the database
-</h5>
 <h5>
    The project uses SQL Server Express LocalDB.
 </h5>
