@@ -21,6 +21,7 @@
     $ git clone https://github.com/vasekva/WEB_CRUD-C_SHARP.git <directory_name>
 ```
 </br>
+    
 ---
 2. Open the project with **VisualStudio** or **JetBrains Rider** :
    1. ***VisualStudio:***
@@ -54,8 +55,7 @@
 
 </br>
 ---
-3.
-   In the header of the page, you can see two links - Projects and Tasks.
+3. In the header of the page, you can see two links - Projects and Tasks.
    Each of them redirects to the editing page of the corresponding table, where its contents are displayed
    and entities can be created, updated and deleted. More details about the functionality in a [separate page](./WEB_CRUD/MD_Files/CRUD_Pages.md)
    
