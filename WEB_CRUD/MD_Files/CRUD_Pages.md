@@ -22,6 +22,7 @@
 [Edit](./Edit.md) Entity,</br>
 [Show details](./Details.md) Entity,</br>
 and ***Delete*** Entity
+
 ![deletePage](./Delete.png)
 
 ---
