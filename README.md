@@ -15,6 +15,7 @@
 
 <h2>Necessary steps to start a project:</h2>
 
+<h1>Before starting, check if all the necessary frameworks are installed!</h1>
    Pay attention! I recommend using ***VisualStudio*** because
    the EntityFrameworkCore.SqlServer extension and the 'SQLServer Object Explorer'
    allow you to conveniently view and delete the database
