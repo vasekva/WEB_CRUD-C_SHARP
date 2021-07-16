@@ -20,10 +20,33 @@ namespace WEB_CRUD.Controllers
         }
 
         // GET: Projects
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            return View(await _context.Projects.ToListAsync());
-        }
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString;
+            var projects = from p in _context.Projects
+                select p;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                projects = projects.Where(s => s.ProjectName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    projects = projects.OrderByDescending(s => s.ProjectName);
+                    break;
+                case "Date":
+                    projects = projects.OrderBy(s => s.StartDate);
+                    break;
+                case "date_desc":
+                    projects = projects.OrderByDescending(s => s.StartDate);
+                    break;
+                default:
+                    projects = projects.OrderBy(s => s.ProjectName);
+                    break;
+            }
+            return View(await projects.AsNoTracking().ToListAsync());        }
 
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)

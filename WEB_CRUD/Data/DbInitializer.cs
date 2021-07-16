@@ -20,17 +20,17 @@ namespace WEB_CRUD.Data
             {
                 new Project
                 {
-                    ProjectName="Alexander",StartDate=DateTime.Parse("2005-09-01"),
+                    ProjectName="Santour",StartDate=DateTime.Parse("2005-09-01"),
                     CompletionDate=DateTime.Parse("2005-12-01"), Status=ProjectStatus.Completed, Priority=2
                 },
                 new Project
                 {
-                    ProjectName="Alonso",StartDate=DateTime.Parse("2002-06-12"),
+                    ProjectName="Orlando's Project",StartDate=DateTime.Parse("2002-06-12"),
                     CompletionDate=DateTime.Parse("2003-12-01"), Status=ProjectStatus.Completed, Priority=0
                 },
                 new Project
                 {
-                    ProjectName="Anand",StartDate=DateTime.Parse("2003-09-01"),
+                    ProjectName="Spectral calculations",StartDate=DateTime.Parse("2003-09-01"),
                     Status=ProjectStatus.Active, Priority=10
                 }
             };
