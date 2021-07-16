@@ -1,4 +1,4 @@
 .idea/
 .vs/
-./WEB_CRUD/obj/*
-./WEB_CRUD/bin/*
+WEB_CRUD/obj/
+WEB_CRUD/bin/

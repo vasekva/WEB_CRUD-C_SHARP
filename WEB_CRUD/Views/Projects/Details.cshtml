@@ -40,6 +40,28 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Priority)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tasks)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>TaskName</th>
+                    <th>Id</th>
+                </tr>
+                @foreach (var item in Model.Tasks)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.TaskName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.TaskEntityID)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
     </dl>
 </div>
 <div>
