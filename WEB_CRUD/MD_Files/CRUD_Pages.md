@@ -16,7 +16,7 @@
 
 ---
 
-<h2>Both the ***Project page*** and the ***Task page*** have links to:</h2>
+Both the ***Project page*** and the ***Task page*** have links to:
 
 [Create](./Create.md) Entity (Above the table),</br>
 [Edit](./Edit.md) Entity,</br>
