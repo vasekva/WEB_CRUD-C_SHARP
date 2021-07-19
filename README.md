@@ -6,6 +6,7 @@
 * Windows 7
 * VisualStudio 2019
 * SQL Server Express LocalDB
+- .NET 5.0
 - EntityFramework 6.4.4
 - Microsoft.EntityFrameworkCore.SqlServer 5.0.8
 - Microsoft.EntityFrameworkCore.Tools 5.0.8
