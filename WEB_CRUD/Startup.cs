@@ -21,7 +21,7 @@ namespace WEB_CRUD
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TaskContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
         }
