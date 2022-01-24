@@ -1,4 +1,5 @@
 .idea/
 .vs/
+.DS_Store
 WEB_CRUD/obj/
 WEB_CRUD/bin/
